@@ -115,4 +115,8 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("Stand", myStands.get(position));
         startActivity(intent);
     }
+    public void testModifGit()
+    {
+        int xD = 970;
+    }
 }
