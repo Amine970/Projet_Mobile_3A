@@ -6,7 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
-    List<Stand> myStands;
+    private List<Stand> myStands;
     private MyStandsAdapter myAdapter;
     private static final String TAG = "cleassaf";
     @Override
@@ -35,18 +40,8 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.recyclerView);
         loadData();
     }
-    public void saveData()
-    {
-        Log.i(TAG, "data saved here");
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String json = new Gson().toJson(myStands);
-        editor.putString("stand list", json);
-        editor.apply();
-    }
     private void loadData()
     {
-
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         String json = sharedPreferences.getString("stand list", null);
         Type type = new TypeToken<ArrayList<Stand>>() {}.getType();
@@ -59,6 +54,15 @@ public class MainActivity extends AppCompatActivity
         }
         else
             setAdapter();
+    }
+    public void saveData()
+    {
+        Log.i(TAG, "data saved here");
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String json = new Gson().toJson(myStands);
+        editor.putString("stand list", json);
+        editor.apply();
     }
     public void setAdapter()
     {
@@ -109,14 +113,35 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.stand_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String s)
+            {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s)
+            {
+                myAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+        return true;
+    }
     public void openDetailsActivity(int position)
     {
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra("Stand", myStands.get(position));
         startActivity(intent);
-    }
-    public void testModifGit()
-    {
-        int xD = 970;
     }
 }

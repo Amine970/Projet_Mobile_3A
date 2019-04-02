@@ -6,21 +6,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.squareup.picasso.Picasso;
 
-public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyViewHolder>
+public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyViewHolder> implements Filterable
 {
-    List<Stand> stands;
-    Context context;
+    private List<Stand> stands;
+    private List<Stand> standsFull;
+    private Context context;
     private OnItemClickListener myListener;
     MyStandsAdapter(List<Stand> stands, Context context )
     {
         this.stands = stands;
+        this.standsFull = new ArrayList<>(stands);
         this.context = context;
     }
 
@@ -43,6 +48,44 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
         return stands.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return standFilter;
+    }
+    private Filter standFilter = new Filter()
+    {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint)
+        {
+            List<Stand> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0)
+            {
+                filteredList.addAll(standsFull);
+            }
+            else
+            {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Stand item : standsFull)
+                {
+                    if(item.getStand_name().toLowerCase().contains(filterPattern))
+                    {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results)
+        {
+            stands.clear();
+            stands.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
     public interface OnItemClickListener
     {
         void onItemClick(int position);
