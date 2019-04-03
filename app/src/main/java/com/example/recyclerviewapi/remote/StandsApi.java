@@ -1,4 +1,6 @@
-package com.example.recyclerviewapi;
+package com.example.recyclerviewapi.remote;
+
+import com.example.recyclerviewapi.model.Stand;
 
 import java.util.List;
 

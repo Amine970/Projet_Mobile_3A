@@ -1,7 +1,9 @@
-package com.example.recyclerviewapi;
+package com.example.recyclerviewapi.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.recyclerviewapi.viewmodel.StandViewModel;
 
 public class Stand implements Parcelable
 {
@@ -12,10 +14,21 @@ public class Stand implements Parcelable
     private String apparition_part_fk;
     private String stand_power;
     private String stand_id;
-    public Stand(String stand_name, String stand_image)
-    {
+
+    public Stand(String stand_name, String stand_user, String stand_image, String user_image, String stand_power) {
         this.stand_name = stand_name;
+        this.stand_user = stand_user;
         this.stand_image = stand_image;
+        this.user_image = user_image;
+        this.stand_power = stand_power;
+    }
+    public Stand(StandViewModel stand)
+    {
+        stand_name = stand.stand_name;
+        stand_user = stand.stand_user;
+        stand_image = stand.stand_image;
+        user_image = stand.user_image;
+        stand_power = stand.stand_power;
     }
 
     protected Stand(Parcel in) {

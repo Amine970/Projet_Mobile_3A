@@ -1,6 +1,7 @@
-package com.example.recyclerviewapi;
+package com.example.recyclerviewapi.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +15,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.recyclerviewapi.R;
+import com.example.recyclerviewapi.databinding.StandBinding;
+import com.example.recyclerviewapi.model.Stand;
+import com.example.recyclerviewapi.viewmodel.StandViewModel;
 import com.squareup.picasso.Picasso;
 
 public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyViewHolder> implements Filterable
 {
-    private List<Stand> stands;
-    private List<Stand> standsFull;
+    private List<StandViewModel> stands;
+    private List<StandViewModel> standsFull;
     private Context context;
     private OnItemClickListener myListener;
-    MyStandsAdapter(List<Stand> stands, Context context )
+    private LayoutInflater layoutInflater;
+    public MyStandsAdapter(List<StandViewModel> stands, Context context )
     {
         this.stands = stands;
         this.standsFull = new ArrayList<>(stands);
@@ -32,15 +38,20 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View view = layoutInflater.inflate(R.layout.stand_item_bis, viewGroup, false);
-        return new MyViewHolder(view);
+        if(layoutInflater == null)
+            layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        StandBinding standBinding = DataBindingUtil.inflate(layoutInflater, R.layout.stand_item_bis,viewGroup,false);
+
+        //return new MyViewHolder(view);
+        return new MyViewHolder(standBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i)
     {
-        myViewHolder.display(stands.get(i)); // i = position dans la liste
+        //myViewHolder.display(stands.get(i)); // i = position dans la liste
+        StandViewModel standViewModel = stands.get(i);
+        myViewHolder.bind(standViewModel);
     }
 
     @Override
@@ -57,7 +68,7 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
         @Override
         protected FilterResults performFiltering(CharSequence constraint)
         {
-            List<Stand> filteredList = new ArrayList<>();
+            List<StandViewModel> filteredList = new ArrayList<>();
             if(constraint == null || constraint.length() == 0)
             {
                 filteredList.addAll(standsFull);
@@ -65,7 +76,7 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
             else
             {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for(Stand item : standsFull)
+                for(StandViewModel item : standsFull)
                 {
                     if(item.getStand_name().toLowerCase().contains(filterPattern))
                     {
@@ -96,15 +107,15 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
         myListener = listener;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    public class MyViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView mFruit;
-        private TextView mUser;
+        private StandBinding standBinding;
         private ImageView standImage;
         private TextView standName;
-        public MyViewHolder(@NonNull View itemView)
+        public MyViewHolder(StandBinding standBinding)
         {
-            super(itemView);
+            super(standBinding.getRoot());
+            this.standBinding = standBinding;
             standImage = (ImageView) itemView.findViewById(R.id.imageView);
             standName = (TextView) itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -122,10 +133,22 @@ public class MyStandsAdapter extends RecyclerView.Adapter<MyStandsAdapter.MyView
                 }
             });
         }
-        void display(Stand stand) // méthode appelée à chaque recyclage
+
+        public void bind(StandViewModel standViewModel)
+        {
+            this.standBinding.setStandModel(standViewModel);
+            standBinding.executePendingBindings();
+        }
+
+        public StandBinding getStandBinding()
+        {
+            return standBinding;
+        }
+
+        /*void display(Stand stand) // méthode appelée à chaque recyclage
         {
             Picasso.with(context).load(stand.getStand_image()).fit().into(standImage);
             standName.setText(stand.getStand_name()+"");
-        }
+        }*/
     }
 }
