@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity
         if(player == null)
         {
             player = MediaPlayer.create(this, R.raw.kakyoin_ost);
+            player.setLooping(true);
         }
         player.start();
     }
