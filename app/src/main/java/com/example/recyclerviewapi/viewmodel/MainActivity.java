@@ -1,4 +1,4 @@
-package com.example.recyclerviewapi;
+package com.example.recyclerviewapi.viewmodel;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,9 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 
+import com.example.recyclerviewapi.R;
 import com.example.recyclerviewapi.adapter.MyStandsAdapter;
 import com.example.recyclerviewapi.model.Stand;
-import com.example.recyclerviewapi.viewmodel.StandViewModel;
+
 import java.util.ArrayList;
 
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         contextOfApplication = getApplicationContext();
+        setTitle("Jojo's Stands list");
         recyclerView = findViewById(R.id.recyclerView);
         standViewModel = ViewModelProviders.of(this).get(StandViewModel.class);
         standViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<StandViewModel>>()

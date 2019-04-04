@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 
 import android.util.Log;
 
-import com.example.recyclerviewapi.MainActivity;
 import com.example.recyclerviewapi.model.Stand;
+import com.example.recyclerviewapi.viewmodel.MainActivity;
 import com.example.recyclerviewapi.viewmodel.StandViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -92,7 +92,6 @@ public class UserRepository
         SharedPreferences sharedPreferences = MainActivity.getContextOfApplication().getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = new Gson().toJson(standsArrayList);
-        Log.i(TAG, json);
         editor.putString("stand list", json);
         editor.apply();
     }

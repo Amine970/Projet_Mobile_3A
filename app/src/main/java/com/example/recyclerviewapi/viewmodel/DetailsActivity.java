@@ -1,4 +1,4 @@
-package com.example.recyclerviewapi;
+package com.example.recyclerviewapi.viewmodel;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.recyclerviewapi.R;
 import com.example.recyclerviewapi.model.Stand;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +23,7 @@ public class DetailsActivity extends AppCompatActivity
         setContentView(R.layout.activity_details);
         Intent intent = getIntent();
         Stand stand = intent.getParcelableExtra("stand");
+        setTitle(stand.getStand_name());
         userImage = findViewById(R.id.userImage);
         userName = findViewById(R.id.userName);
         standPower = findViewById(R.id.standPower);
