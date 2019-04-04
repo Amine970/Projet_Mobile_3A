@@ -6,4 +6,11 @@
         android:title="Search"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item
+        android:id="@+id/volume"
+        android:icon="@drawable/ic_volume_on"
+        android:title="VolumeOn"
+        app:showAsAction="ifRoom|collapseActionView"
+
+        />
 </menu>

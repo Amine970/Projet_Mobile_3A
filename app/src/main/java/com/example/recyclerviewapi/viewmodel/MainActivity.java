@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private StandViewModel standViewModel;
     private MyStandsAdapter myStandsAdapter;
+    private MediaPlayer player;
     public static Context contextOfApplication;
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity
                 myStandsAdapter = new MyStandsAdapter(standViewModels, MainActivity.this);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 recyclerView.setAdapter(myStandsAdapter);
+                playMusic();
                 myStandsAdapter.setOnItemClickListener(new MyStandsAdapter.OnItemClickListener()
                 {
                     @Override
@@ -85,10 +88,54 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+        MenuItem volumeOnItem = menu.findItem(R.id.volume);
+        volumeOnItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getTitle().toString().equals("VolumeOn"))//
+                {
+                    item.setIcon(R.drawable.ic_volume_off);
+                    item.setTitle("VolumeOff");
+                    stopMusic();
+
+                }
+                else
+                {
+                    item.setIcon(R.drawable.ic_volume_on);
+                    item.setTitle("VolumeOn");
+                    playMusic();
+                }
+                return false;
+            }
+        });
         return true;
     }
     public static Context getContextOfApplication()
     {
         return contextOfApplication;
+    }
+    public void playMusic()
+    {
+        if(player == null)
+        {
+            player = MediaPlayer.create(this, R.raw.kakyoin_ost);
+        }
+        player.start();
+    }
+    public void stopMusic()
+    {
+        if(player != null)
+        {
+            player.pause();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(player != null)
+        {
+            player.release();
+            player = null;
+        }
     }
 }
