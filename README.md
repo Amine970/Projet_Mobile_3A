@@ -36,7 +36,7 @@ Cette application permet d'afficher une liste des Stands des parties 3 à 5 de J
 
 ### Ecran Home 
 
-- Affiche la liste des pokémons avec musique on (à gauche) et off (à droite) et une barre de recherche.
+- Affiche la liste des stands avec musique on (à gauche) et off (à droite) et une barre de recherche.
 
 <img src="readme_images/liste_volume_on.jpg" width="268" height="467" alt="liste stands">        <img src="readme_images/liste_volume_off.jpg" width="268" height="467" alt="liste stands"> 
 
