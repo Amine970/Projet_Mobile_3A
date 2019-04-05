@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         contextOfApplication = getApplicationContext();
-        setTitle("Jojo's Stands list");
+        setTitle("JoJo's Stands list");
         recyclerView = findViewById(R.id.recyclerView);
         standViewModel = ViewModelProviders.of(this).get(StandViewModel.class);
         standViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<StandViewModel>>()
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
     {
         if(player == null)
         {
-            player = MediaPlayer.create(this, R.raw.kakyoin_ost);
+            player = MediaPlayer.create(this, R.raw.uragirimono_no_requiem_baquu);
             player.setLooping(true);
         }
         player.start();
