@@ -46,7 +46,7 @@ Cette application permet d'afficher une liste des Stands des parties 3 à 5 de J
 - Le nom de l'utilisateur
 - Explication du pouvoir du Stand
 
-<img src="readme_images/ecrans_details.jpg" width="268" height="467" alt="détails stands">
+<img src="readme_images/ecran_details.jpg" width="268" height="467" alt="détails stands">
 
 ### Filtres 
 
