@@ -26,7 +26,7 @@ Cette application permet d'afficher une liste des Stands des parties 3 à 5 de J
 
 - Fonctions supplémentaires :
 	
-	- Création d'API personnalisée (rly-chrono.fr/api/stands)
+	- Création d'une API personnalisée (rly-chrono.fr/api/stands)
 	- Barre de recherche (SearchView)
 	- Musique en arrière plan (ajout d'un menu pour play et pause quand on appuie dessus)
 	
