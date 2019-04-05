@@ -14,20 +14,22 @@ Cette application permet d'afficher une liste des Stands des parties 3 à 5 de J
 
 - Pour une note minimale :
 
-- Deux écrans : Un écran avec une liste (RecyclerView) et un écran avec un détail de l’item.
-- Appel WebService à une API Rest.
-- Stockage des données en cache.
+	- Deux écrans : Un écran avec une liste (RecyclerView) et un écran avec un détail de l’item.
+	- Appel WebService à une API Rest.
+	- Stockage des données en cache.
 
 - Consignes bonus : 
 
-- Architecture MVVM
-- Gitflow
-- Notifications Push ( Firebase )
+	- Architecture MVVM
+	- Gitflow
+	- Notifications Push ( Firebase )
 
 - Fonctions supplémentaires :
-
+	
+	- Création d'API personnalisée (rly-chrono.fr/api/stands)
 	- Barre de recherche (SearchView)
 	- Musique en arrière plan (ajout d'un menu pour play et pause quand on appuie dessus)
+	
 
 
 ## Fonctionnalités: 
